@@ -53,7 +53,7 @@ lines(x, predict(popmod), col = "blue", lty = 2)
 #Question 2b
 x2 <- seq(min(intercept), max(intercept), length = 100)
 theoreticalsdb0 <- mean(mse) * sqrt(1/20 + mean(x)**2 / sum((x - mean(x))**2))
-fun <- dnorm(x2, mean = mean(intercept), sd = sd(intercept))
+fun <- dnorm(x2, mean = 90, sd = sd(intercept))
 
 hist(intercept, nclass = 100, prob = TRUE)
 lines(x2, fun, col = "blue")
@@ -64,7 +64,7 @@ mean(intercept)
 theoreticalsdb1 <- mean(mse) / sum((x - mean(x))**2)
 
 x2 <- seq(min(slope), max(slope), length = 100)
-fun <- dnorm(x2, mean = mean(slope), sd = sd(slope))
+fun <- dnorm(x2, mean = -1, sd = sd(slope))
 
 hist(slope, nclass = 100, prob = TRUE)
 lines(x2, fun, col = "blue")
