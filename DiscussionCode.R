@@ -6,7 +6,7 @@ set.seed(1000)
 w = rep(0:10, 2)
 z = 90 - w
 
-popsigma <- sd(z)
+popsigma <- var(z)
 
 popmod <- lm(z~w)
 
@@ -44,9 +44,9 @@ for (i in 1:n){
   mse[i] <- sum((model$residuals)**2) / (20)
   rho[i] <- slope[i] * (sd(x) / sd(y))
   
-  #plot(x,y)
-  #abline(a = 90, b = -1, col = "blue")
-  #abline(a = mymod$coefficients[1], b = mymod$coefficients[2], col = "darkgray")
+  plot(x,y)
+  abline(a = 90, b = -1, col = "blue")
+  abline(a = mymod$coefficients[1], b = mymod$coefficients[2], col = "darkgray")
 }
 
 #Question 2b
@@ -81,16 +81,10 @@ mean(mse)
 #Question 2f
 u = 20 * mse / popsigma
 dom <- seq(min(u), max(u), length = 1000)
-fun <- dchisq(dom, df = 154)
+fun <- dchisq(dom, df = 47)
 
 hist(u, nclass = 100, freq = FALSE)
 lines(dom, fun, col = "blue")
-
-
-library(ggplot2)
-ggplot(df, aes(x = u)) +
-  geom_histogram(aes(y = ..density..)) +
-  stat_function(fun = dchisq(x, df = 20), col = "blue", size = 5)
 
 mean(u)
 var(u)
