@@ -10,15 +10,15 @@ popsigma <- var(z)
 
 popmod <- lm(z~w)
 
+sd(z)
+sd(w)
+
 #Sample Line
 x = rep(0:10, 2)
 y = 90 - x + rnorm(22, 0, 5)
 
 mymod <- lm(y~x)
-
-plot(x, y)
-abline(a = 90, b = -1, col = "blue")
-abline(a = mymod$coefficients[1], b = mymod$coefficients[2], col = "darkgray")
+summary(mymod)
 
 #Question 1b
 
@@ -35,6 +35,7 @@ intercept <- as.vector(matrix(data=0,nrow=n,ncol=1))
 mse <- as.vector(matrix(data=0,nrow=n,ncol=1))
 rho <- as.vector(matrix(data=0,nrow=1,ncol=1))
 
+plot(w, z, col = "blue", type = "l")
 for (i in 1:n){
   x = rep(0:10, 2)
   y = 90 - x + rnorm(22, 0, 5)
@@ -44,10 +45,10 @@ for (i in 1:n){
   mse[i] <- sum((model$residuals)**2) / (20)
   rho[i] <- slope[i] * (sd(x) / sd(y))
   
-  plot(x,y)
-  abline(a = 90, b = -1, col = "blue")
-  abline(a = mymod$coefficients[1], b = mymod$coefficients[2], col = "darkgray")
+
+  lines(x, predict(model), col = 'gray', lty = 2)
 }
+lines(x, predict(popmod), col = "blue", lty = 2)
 
 #Question 2b
 x2 <- seq(min(intercept), max(intercept), length = 100)
@@ -79,9 +80,9 @@ hist(mse, nclass = 100)
 mean(mse)
 
 #Question 2f
-u = 20 * mse / popsigma
+u = (20 * mse) / 25
 dom <- seq(min(u), max(u), length = 1000)
-fun <- dchisq(dom, df = 47)
+fun <- dchisq(dom, df = 20)
 
 hist(u, nclass = 100, freq = FALSE)
 lines(dom, fun, col = "blue")
